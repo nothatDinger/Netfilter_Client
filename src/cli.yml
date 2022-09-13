@@ -1,0 +1,30 @@
+name: NetfilterFirewallClient
+version: "1.0"
+about: hi hi hi
+author: Dinger
+
+args:
+    - print:
+        help: print the log, connection and rules
+        short: p
+        long: print
+        multiple: false
+        takes_value: false
+    - add: 
+        help: add a rule
+        short: a
+        long: add
+        multiple: true
+        takes_value: true
+    - delete:
+        help: delete a rule
+        short: d
+        long: delete
+        multiple: true
+        takes_value: true
+    - commit: 
+        help: commit all rules in rule.db
+        short: c
+        long: commit
+        multiple: false
+        takes_value: false
