@@ -17,17 +17,7 @@ fn main() {
         Ok(res) => println!("{}", res),
         Err(why) => println!("{}", why)
     }    
-    // add
-    // let test = "192.168.0.1/24 192.168.2.1/24 0 80 TCP 0 1".parse::<Rule>();
-    // match test{
-    //     Ok(res) => println!("{}", res),
-    //     Err(why) => println!("{}", why)
-    // }
-    // let val  = matches.value_of("add");
-    // match val{
-    //     Some(res) => println!("{}", res),
-    //     None => println!("none")
-    // }    
+
     if let Ok(adds) = matches.values_of_t::<Rule>("add"){
         for i in adds{
             println!("Value for -a: {}", i);

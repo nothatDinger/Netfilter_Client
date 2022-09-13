@@ -36,13 +36,6 @@ impl Client{
             Err(why) => panic!("couldn't open file: {}",why),
         };
         for line_result in BufReader::new(file).lines(){
-            // if let Ok(line) = line_result{
-            //     let rule = line.parse::<Rule>().unwrap();
-            //     self.rule_list.push(rule);
-            // }
-            // let err = line_result.and_then(|line_str|{
-            //     line_str.parse::<Rule>().map(|rule| self.rule_list.push(rule))
-            // });
             let line_str =  match line_result {
                 Ok(line_str) => line_str,
                 Err(e)  => panic!("{}", e)
@@ -103,7 +96,6 @@ impl Client{
         let op = Operation::GetLog;
         file.write_all(&[(op as u8)])?;
         for line_result in BufReader::new(file).lines(){
-           // self.log_list.push(line.parse::<Log>()?);
             let line_str =  match line_result {
                 Ok(line_str) => line_str,
                 Err(e)  => panic!("{}", e)
