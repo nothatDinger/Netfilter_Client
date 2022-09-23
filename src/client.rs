@@ -30,7 +30,7 @@ impl Client{
     }
     pub fn get_rules(&mut self) {
         self.rule_list.clear();
-        let path = Path::new(DEV_NAME);
+        let path = Path::new(RULE_DB);
         let file = match File::open(&path) {
             Ok(file) => file,
             Err(why) => panic!("couldn't open file: {}",why),
@@ -51,7 +51,7 @@ impl Client{
     pub fn commit_rules(&mut self) -> std::io::Result<()> {
         self.get_rules();
         let path = Path::new(DEV_NAME);
-        let mut file = match File::open(&path) {
+        let mut file = match File::create(&path) {
             Ok(file) => file,
             Err(why) => panic!("couldn't open file: {} in function commit_rules",why),
         };        
@@ -64,7 +64,7 @@ impl Client{
         Ok(())
     }
     pub fn add_rules(&mut self, rule: Rule) -> std::io::Result<()>{
-        if let Ok(mut file) = File::open(RULE_DB){
+        if let Ok(mut file) = File::create(RULE_DB){
             file.write_fmt(format_args!("{}\n",rule.to_string()))?;
             println!("Add rules : {}",rule.to_string());
         }
@@ -73,7 +73,7 @@ impl Client{
     pub fn delete_rules(&mut self, index: usize) -> std::io::Result<()> {
         self.get_rules();
         self.rule_list.remove(index);
-        if let Ok(mut file) = File::open(RULE_DB){
+        if let Ok(mut file) = File::create(RULE_DB){
             for rule in &self.rule_list {
                 file.write_fmt(format_args!("{}\n",rule.to_string()))?;
                 println!("Commit rules: {}",rule.to_string());
@@ -82,10 +82,12 @@ impl Client{
         Ok(())
     }
     pub fn print_rules(&mut self) {
-        println!("   src_net        dst_net     src_port dst_port protocol action log");
-        println!("-------------------------------------------------------------------");
+        println!("   src_net          dst_net       src_port dst_port protocol action log");
+        println!("-----------------------------------------------------------------------");
+        self.get_rules();
         for i in &self.rule_list{
-            println!("{}",i)
+            let s: &str = &i.to_string();
+            println!("{}",s.trim_start_matches("Rule: "))
         }
     }
     pub fn get_logs(&mut self) -> std::io::Result<()>{

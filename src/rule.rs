@@ -12,15 +12,6 @@ pub struct Rule{
     log: u8,
 }
 
-// impl ToString for Rule {
-//     fn to_string(&self) -> String {
-//         format!("Rule: {} {} {} {} {} {} {}",
-//             self.src_net, self.dst_net, self.src_port, self.dst_port,
-//             self.protocol, self.action, self.log
-//         )
-//     }
-// }
-
 impl FromStr for Rule {
     type Err = MyParseError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -39,7 +30,7 @@ impl FromStr for Rule {
 impl std::fmt::Display for Rule {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 
-        write!(f, "{}",format!("Rule: {} {}      {}    {}       {}      {}    {}",
+        write!(f, "{}",format!("Rule: {} {}      {}      {}       {}      {}    {}",
                 self.src_net, self.dst_net, self.src_port, self.dst_port,
                 self.protocol, self.action, self.log)
         )

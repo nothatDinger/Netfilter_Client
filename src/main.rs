@@ -24,9 +24,11 @@ fn main() {
             client.add_rules(i).unwrap();
         }
     }
-    if let Some(&delete) = matches.get_one::<usize>("delete"){
-        println!("Value for -a: {}", delete);
-        client.delete_rules(delete).unwrap();
+    if let Some(delete) = matches.value_of("delete"){
+        
+        let d: usize =  delete.parse::<usize>().unwrap();
+        println!("Value for -d: {}", d);
+        client.delete_rules(d).unwrap();
     }
     if matches.contains_id("commit"){
         println!("Value for -c ");
